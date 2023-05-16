@@ -13,14 +13,21 @@
         android:theme="@style/Theme.TelemedicineUI"
         tools:targetApi="31">
         <activity
-            android:name=".JSONParser"
+            android:name=".AboutUs"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login"
+            android:name=".Appoint"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".JSONParser"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -30,13 +37,6 @@
             android:name=".ui.login.Login"
             android:exported="false"
             android:label="@string/title_activity_login" />
-        <activity
-            android:name=".SignUp"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
