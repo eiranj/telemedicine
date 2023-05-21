@@ -8,56 +8,95 @@ import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Appoint extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
-    private static Button btnQuery;
-    private static EditText nme, idno, em, con, msg;
+
+public class Medicine extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private static Button btnMed;
+    private static EditText QtyMed, IdMed, NameMed;
+    private static TextView TextViewMed;
+    private static Spinner Medspinner;
     private static JSONParser jParser = new JSONParser();
-    private static String urlHost = "http://192.168.42.168/telemed/InsertTrans.php";
+    private static String urlHost = "http://192.168.254.106/telemed_mob/InsertMed.php";
     private static String TAG_MESSAGE = "message", TAG_SUCCESS = "success";
     private static String online_dataset = "";
-    private static String name = "";
+    public static String qty = "";
     public static String id = "";
-    public static String email = "";
-    public static String contact = "";
-    public static String message = "";
+    public static String name = "";
+    public static String medicinestr = "";
+    public static String mdcn = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appoint);
+        setContentView(R.layout.activity_medicine);
+        btnMed = (Button) findViewById(R.id.btnmed);
+        QtyMed = (EditText) findViewById(R.id.qtymed);
+        IdMed = (EditText) findViewById(R.id.idmed);
+        NameMed = (EditText) findViewById(R.id.namemed);
+        Medspinner = (Spinner) findViewById(R.id.spinner);
+        TextViewMed = (TextView) findViewById(R.id.textViewMed);
 
-        btnQuery = (Button) findViewById(R.id.btnQuery);
-        nme = (EditText) findViewById(R.id.edname);
-        idno = (EditText) findViewById(R.id.edidnum);
-        em = (EditText) findViewById(R.id.edemail);
-        con = (EditText) findViewById(R.id.edcontact);
-        msg = (EditText) findViewById(R.id.edmsg);
+        TextViewMed.setText(mdcn);
 
-        btnQuery.setOnClickListener(new View.OnClickListener() {
+
+        Medspinner.setOnItemSelectedListener(this);
+
+        List<String> medicine = new ArrayList<String>();
+        medicine.add("Biogesic");
+        medicine.add("Bioflu");
+        medicine.add("Solmux");
+        medicine.add("Neozep");
+        medicine.add("Diatabs");
+        medicine.add("Hydrite");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, medicine);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Medspinner.setAdapter(dataAdapter);
+
+        btnMed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name = nme.getText().toString();
-                id = idno.getText().toString();
-                email = em.getText().toString();
-                contact = con.getText().toString();
-                message = msg.getText().toString();
-                new uploadDatatoURL().execute();
+                qty = QtyMed.getText().toString();
+                id = IdMed.getText().toString();
+                name = NameMed.getText().toString();
+                if (medicinestr.equals("medicine")){
+                    medicinestr = mdcn;
+                }
+
+                new Medicine.uploadDatatoURL().execute();
             }
         });
 
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        medicinestr = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     private class uploadDatatoURL extends AsyncTask<String, String, String> {
         String cPOST = "", cPostSQL = "", cMessage = "Querying data...";
         int nPostValueIndex;
-        ProgressDialog pDialog = new ProgressDialog(Appoint.this);
+        ProgressDialog pDialog = new ProgressDialog(Medicine.this);
 
         public uploadDatatoURL() {}
 
@@ -74,7 +113,7 @@ public class Appoint extends AppCompatActivity {
             int nSuccess;
             try {
                 ContentValues cv = new ContentValues();
-                cPostSQL = " '" + id + "' , '" + name + "' , '" + contact + "' , '" + email + "' , '" + message + "' ";
+                cPostSQL = " '" + id + "' , '" + name + "' , '" + qty + "' , '" + medicinestr +"' ";
                 cv.put("code", cPostSQL);
 
                 JSONObject json = jParser.makeHTTPRequest(urlHost, "POST", cv);
@@ -99,11 +138,11 @@ public class Appoint extends AppCompatActivity {
             super.onPostExecute(s);
             pDialog.dismiss();
             String isEmpty = "";
-            AlertDialog.Builder alert = new AlertDialog.Builder(Appoint.this);
+            AlertDialog.Builder alert = new AlertDialog.Builder(Medicine.this);
             if (s !=null) {
                 if (isEmpty.equals("") && !s.equals("HTTPSERVER_ERROR")) {
                 }
-                Toast.makeText(Appoint.this, s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Medicine.this, s, Toast.LENGTH_SHORT).show();
             }else{
                 alert.setMessage("Query Interrupted ... \nPlease Check Internet Connection");
                 alert.setTitle("Error");
@@ -113,3 +152,5 @@ public class Appoint extends AppCompatActivity {
 
     }
 }
+message.txt
+        5 KB
