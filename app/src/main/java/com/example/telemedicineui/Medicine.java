@@ -152,5 +152,3 @@ public class Medicine extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 }
-message.txt
-        5 KB
