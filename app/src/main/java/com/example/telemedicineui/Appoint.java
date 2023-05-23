@@ -20,7 +20,7 @@ public class Appoint extends AppCompatActivity {
     private static Button btnQuery;
     private static EditText nme, idno, em, con, msg;
     private static JSONParser jParser = new JSONParser();
-    private static String urlHost = "http://192.168.42.168/telemed/InsertTrans.php";
+    private static String urlHost = "http://192.168.0.106/telemedmob/InsertTrans.php";
     private static String TAG_MESSAGE = "message", TAG_SUCCESS = "success";
     private static String online_dataset = "";
     private static String name = "";

@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    Button appoint,aboutus;
+    Button appoint,aboutus, medicine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        medicine = findViewById(R.id.med);
         appoint = findViewById(R.id.appoint);
         aboutus = findViewById(R.id.abtus);
 
@@ -30,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, AboutUs.class);
+                startActivity(i);
+            }
+        });
+        medicine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, Medicine.class);
                 startActivity(i);
             }
         });

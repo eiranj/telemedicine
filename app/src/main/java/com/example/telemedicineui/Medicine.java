@@ -30,7 +30,7 @@ public class Medicine extends AppCompatActivity implements AdapterView.OnItemSel
     private static TextView TextViewMed;
     private static Spinner Medspinner;
     private static JSONParser jParser = new JSONParser();
-    private static String urlHost = "http://192.168.254.106/telemed_mob/InsertMed.php";
+    private static String urlHost = "http://192.168.0.106/telemedmob/InsertMed.php";
     private static String TAG_MESSAGE = "message", TAG_SUCCESS = "success";
     private static String online_dataset = "";
     public static String qty = "";
